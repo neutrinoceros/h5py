@@ -84,8 +84,8 @@ jobs:
         with:
           python-version: 3.12
         if: runner.os == 'Windows'
-      - run: bash ./ci/cibw_before_all_windows.sh "${{ github.workspace }}"
-        if: runner.os == 'Windows'
+      #- run: bash ./ci/cibw_before_all_windows.sh "${{ github.workspace }}"
+      #  if: runner.os == 'Windows'
 
       # macOS HDF5
       - run: bash ./ci/cibw_before_all_macos.sh "${{ github.workspace }}"
@@ -109,7 +109,7 @@ jobs:
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_BUILD: cp313-*
           CIBW_SKIP: ${{ env.CIBW_SKIP }}
-          CIBW_BEFORE_BUILD: ${{ env.CIBW_BEFORE_BUILD }}
+          CIBW_BEFORE_BUILD: bash ./ci/cibw_before_all_windows.sh "${{ github.workspace }}"
           CIBW_BUILD_FRONTEND: "pip; args: --no-build-isolation"
           TOX_TEST_LIMITED: ${{ env.TOX_TEST_LIMITED }}
           CIBW_PRERELEASE_PYTHONS: ${{ env.CIBW_PRERELEASE_PYTHONS }}
