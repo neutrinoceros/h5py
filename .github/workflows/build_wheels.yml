@@ -49,22 +49,18 @@ jobs:
       matrix:
         # Wheel builds are fast except for aarch64, so split that into multiple jobs,
         # one for each Python version
-        os: [ubuntu-latest]
-        arch: [aarch64]
-        python:
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
+        #os: [ubuntu-latest]
+        #arch: [aarch64]
+        #python: ["3.9", "3.10", "3.11", "3.12"]
         include:
-          - os: ubuntu-latest
-            arch: x86_64
+          #- os: ubuntu-latest
+          #  arch: x86_64
           - os: windows-latest
             arch: AMD64
-          - os: macos-14
-            arch: arm64
-          - os: macos-13
-            arch: x86_64
+          #- os: macos-14
+          #  arch: arm64
+          #- os: macos-13
+          #  arch: x86_64
     steps:
       - uses: actions/checkout@v4
         with:
@@ -111,10 +107,10 @@ jobs:
         env:
           # Note that tool.cibuildwheel "skip" in pyproject.toml also limits what gets built
           CIBW_ARCHS: ${{ matrix.arch }}
-          CIBW_BUILD: ${{ env.CIBW_BUILD }}
+          CIBW_BUILD: cp313-*
           CIBW_SKIP: ${{ env.CIBW_SKIP }}
           CIBW_BEFORE_BUILD: ${{ env.CIBW_BEFORE_BUILD }}
-          CIBW_BUILD_FRONTEND: ${{ env.CIBW_BUILD_FRONTEND }}
+          CIBW_BUILD_FRONTEND: "pip; args: --no-build-isolation"
           TOX_TEST_LIMITED: ${{ env.TOX_TEST_LIMITED }}
           CIBW_PRERELEASE_PYTHONS: ${{ env.CIBW_PRERELEASE_PYTHONS }}
           CIBW_BEFORE_TEST: ${{ env.CIBW_BEFORE_TEST }}

@@ -32,3 +32,7 @@ if [[ "$GITHUB_ENV" != "" ]] ; then
     echo "ZLIB_ROOT=$ZLIB_ROOT" | tee -a $GITHUB_ENV
     echo "HDF5_DIR=$HDF5_DIR" | tee -a $GITHUB_ENV
 fi
+
+PIP_EXTRA_INDEX_URL=https://pypi.anaconda.org/scientific-python-nightly-wheels/simple/
+pip install Cython numpy --pre
+pip install pkgconfig setuptools
