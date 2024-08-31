@@ -40,7 +40,7 @@ if [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$GITHUB_EVENT_NAME" == "workf
     echo "CIBW_BEFORE_BUILD=pip install --pre --only-binary numpy --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \"numpy>=2.1.0.dev0\" \"Cython>=0.29.31,<4\" pkgconfig \"setuptools>=61\" wheel" | tee -a $GITHUB_ENV
     echo "CIBW_BUILD_FRONTEND=pip; args: --no-build-isolation" | tee -a $GITHUB_ENV
     # This is harder on other architectures, so only do it on Linux for now
-    if [[ "$RUNNER_OS" == "Linux" ]] && [[ "$ARCH" == "x86_64" ]]; then
+    if [[ "$RUNNER_OS" == "Linux" ]]; then
         CIBW_PRERELEASE_PYTHONS=true
     fi
     echo "CIBW_BEFORE_TEST=pip install --pre --only-binary numpy --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \"numpy>=2.1.0.dev0\"" | tee -a $GITHUB_ENV
