@@ -33,7 +33,7 @@ if [[ "$REPORTED" != "1" ]]; then
     echo "Building full $KIND wheels on event_name=$GITHUB_EVENT_NAME with commit message: $MSG"
 fi
 CIBW_SKIP="pp* *musllinux*"
-CIBW_PRERELEASE_PYTHONS=false
+
 # If it's a scheduled build or [pip-pre] in commit message, use pip-pre
 if [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$MSG" = *'[pip-pre]'* ]]; then
     echo "Using NumPy pip-pre wheel and (on Linux), setting CIBW_BEFORE_BUILD, CIBW_BUILD_FRONTEND and CIBW_BEFORE_TEST"
