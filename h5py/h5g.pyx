@@ -389,10 +389,7 @@ cdef class GroupID(ObjectID):
         if statbuf.type != H5G_LINK:
             raise ValueError('"%s" is not a symbolic link.' % name)
 
-        IF UNAME_SYSNAME == "Windows":
-            linklen = 2049  # Windows statbuf.linklen seems broken
-        ELSE:
-            linklen = statbuf.linklen+1
+        linklen = statbuf.linklen+1
         value = <char*>emalloc(sizeof(char)*linklen)
         try:
             H5Gget_linkval(self.id, name, linklen, value)
