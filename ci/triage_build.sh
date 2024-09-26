@@ -39,7 +39,7 @@ if [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$MSG" = *'[pip-pre]'* ]]; the
     echo "CIBW_BEFORE_BUILD=pip install --pre --only-binary numpy --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \"numpy>=2.0.0.dev0\" \"Cython>=0.29.31,<4\" pkgconfig \"setuptools>=61\" wheel" | tee -a $GITHUB_ENV
     echo "CIBW_BUILD_FRONTEND=pip; args: --no-build-isolation" | tee -a $GITHUB_ENV
     # This is harder on other architectures, so only do it on Linux for now
-    echo "CIBW_BEFORE_TEST=pip install --pre --only-binary numpy --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \"numpy>=2.1.0.dev0\"" | tee -a $GITHUB_ENV
+    echo "CIBW_BEFORE_TEST=pip install --pre --only-binary numpy --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \"numpy>=2.0.0.dev0\"" | tee -a $GITHUB_ENV
 fi
 
 # strip '-dev' suffix for pre-releases Pythons
