@@ -28,13 +28,26 @@ RUN_REQUIRES = [
     # But we don't want to duplicate the information in oldest-supported-numpy
     # here, and if you can build an older NumPy on a newer Python, h5py probably
     # works (assuming you build it from source too).
-    # NumPy 1.21.2 is the first release with any wheels for Python 3.10, our minimum Python.
+    # NumPy 1.21.2 is the first release with any wheels for Python 3.10
+    # We also list per-version minimal requirements, to allow
+    # dependency resolvers to produce a working solution when constrained
+    # to lowest requirements
     "numpy >=1.21.2",
+    "numpy >=1.23.2 ; python_version>='3.11'",
+    "numpy >=1.26.0 ; python_version>='3.12'",
+    "numpy >=2.1.0 ; python_version>='3.13'",
+    "numpy >=2.3.2 ; python_version>='3.14'",
 ]
 
 if setup_configure.mpi_enabled():
-    # 3.1.2 is the first release with any wheels for Python 3.10
-    RUN_REQUIRES.append('mpi4py >=3.1.2')
+    RUN_REQUIRES.extend([
+        # 3.1.2 is the first release with any wheels for Python 3.10,
+        "mpi4py >=3.1.2",
+        "mpi4py >=3.1.4; python_version>='3.11'",
+        "mpi4py >=3.1.6; python_version>='3.12'",
+        "mpi4py >=4.0.1; python_version>='3.13'",
+        "mpi4py >=4.1.0; python_version>='3.14'",
+    ])
 
 # --- Custom Distutils commands -----------------------------------------------
 
