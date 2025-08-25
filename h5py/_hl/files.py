@@ -502,6 +502,8 @@ class File(Group):
             Passed on to the selected file driver.
         """
         if driver == 'ros3':
+            if not isinstance(name, str):
+                raise TypeError(f"with {driver=!r}, name must be str, not {type(name).__name__}")
             if ros3:
                 from urllib.parse import urlparse
                 url = urlparse(name)
