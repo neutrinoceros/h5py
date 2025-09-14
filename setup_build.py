@@ -5,11 +5,6 @@
     linking.
 """
 
-try:
-    from setuptools import Extension
-except ImportError:
-    from distutils.extension import Extension
-from distutils.command.build_ext import build_ext
 import copy
 import sys
 import sysconfig
@@ -18,6 +13,9 @@ import os.path as op
 import platform
 from pathlib import Path
 from Cython import Tempita as tempita
+from setuptools import Extension
+from setuptools.command.build_ext import build_ext
+
 import api_gen
 from setup_configure import BuildConfig
 
@@ -168,7 +166,13 @@ class h5py_build_ext(build_ext):
 
         settings["py_limited_api"] = USE_PY_LIMITED_API
 
-        return Extension('h5py.' + module, sources, **settings)
+        ext = Extension('h5py.' + module, sources, **settings)
+
+        # monkeypatching needed because our subclass is hacky;
+        # this is normally set by `self.finalize_options` but only if `self.extensions`
+        # is already set, which is not the case for this subclass
+        ext._needs_stub = True
+        return ext
 
     def get_ext_filename(self, ext_name: str) -> str:
         r"""Convert the name of an extension (eg. "foo.bar") into the name
